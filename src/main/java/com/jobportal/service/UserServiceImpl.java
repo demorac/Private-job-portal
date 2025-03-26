@@ -129,39 +129,49 @@ public void removeExpiredOTPs() {
 
 @Override
 public void sendInterviewEmail(String email, String jobTitle, String company, String interviewTime, String interviewLocation) throws Exception {
-    MimeMessage message = mailSender.createMimeMessage();
-    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+    try {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-    helper.setTo(email);
-    helper.setSubject("Interview Scheduled: " + jobTitle);
+        helper.setTo(email);
+        helper.setSubject("Interview Scheduled: " + jobTitle);
 
-    String emailContent = "<!DOCTYPE html>"
-            + "<html><head><meta charset='UTF-8'>"
-            + "<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
-            + "<title>Interview Scheduled</title>"
-            + "<style>"
-            + "body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }"
-            + ".container { background: white; padding: 20px; border-radius: 8px; text-align: center; }"
-            + ".header { font-size: 20px; font-weight: bold; color: #2c3e50; }"
-            + ".details { margin: 10px 0; font-size: 16px; color: #34495e; }"
-            + "</style></head><body>"
-            + "<div class='container'>"
-            + "<div class='header'>📅 Your Interview is Scheduled!</div>"
-            + "<p class='details'><strong>Job Title:</strong> " + jobTitle + "</p>"
-            + "<p class='details'><strong>Company:</strong> " + company + "</p>"
-            + "<p class='details'><strong>Interview Time:</strong> " + interviewTime + " (IST)</p>"
-            + "<p class='details'><strong>Interview Location:</strong> " + interviewLocation + "</p>"
-            + "<p>Good luck! Please be prepared for the interview.</p>"
-            + "<hr>"
-            + "<p class='footer'>Need help? Contact our support team at <a href='mailto:support@jobseekhelp.com'>support@jobseekhelp.com</a></p>"
-            + "<p class='footer'>© 2024 JobSeeK. All rights reserved.</p>"
-            + "</div>"
-            + "</body>"
-            + "</html>";
+        String emailContent = "<!DOCTYPE html>"
+                + "<html><head><meta charset='UTF-8'>"
+                + "<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
+                + "<title>Interview Scheduled</title>"
+                + "<style>"
+                + "body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }"
+                + ".container { background: white; padding: 20px; border-radius: 8px; text-align: center; }"
+                + ".header { font-size: 20px; font-weight: bold; color: #2c3e50; }"
+                + ".details { margin: 10px 0; font-size: 16px; color: #34495e; }"
+                + "</style></head><body>"
+                + "<div class='container'>"
+                + "<div class='header'>📅 Your Interview is Scheduled!</div>"
+                + "<p class='details'><strong>Job Title:</strong> " + jobTitle + "</p>"
+                + "<p class='details'><strong>Company:</strong> " + company + "</p>"
+                + "<p class='details'><strong>Interview Time:</strong> " + interviewTime + " (IST)</p>"
+                + "<p class='details'><strong>Interview Location:</strong> " + interviewLocation + "</p>"
+                + "<p>Good luck! Please be prepared for the interview.</p>"
+                + "<hr>"
+                + "<p class='footer'>Need help? Contact our support team at <a href='mailto:support@jobseekhelp.com'>support@jobseekhelp.com</a></p>"
+                + "<p class='footer'>© 2024 JobSeeK. All rights reserved.</p>"
+                + "</div>"
+                + "</body>"
+                + "</html>";
 
-    helper.setText(emailContent, true);
-    mailSender.send(message);
+        helper.setText(emailContent, true);
+
+        System.out.println("📤 Sending email to: " + email);
+        mailSender.send(message);
+        System.out.println("✅ Email sent successfully!");
+
+    } catch (Exception e) {
+        System.err.println("❌ Email sending failed: " + e.getMessage());
+        e.printStackTrace();
+    }
 }
+
 
 @Override
 public UserDTO getUserByEmail(String email) throws JobPortalException {
