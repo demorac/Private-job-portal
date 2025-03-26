@@ -4,16 +4,20 @@ FROM openjdk:17-jdk-slim
 # Set working directory
 WORKDIR /app
 
-# Copy the source code
-COPY . .
+# Copy the Maven wrapper and pom.xml first to leverage Docker caching
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
 
-# Build the application using Maven (inside Docker)
+# Grant execute permissions to Maven wrapper
+RUN chmod +x ./mvnw
+
+# Run Maven build to create the JAR file
 RUN ./mvnw clean package -DskipTests
 
-# Copy the generated JAR file to the container
+# Copy only the built JAR file to the container
 COPY target/Job-Portal-0.0.4-SNAPSHOT.jar app.jar
 
-# Expose the port
+# Expose the application port
 EXPOSE 8080
 
 # Run the application
