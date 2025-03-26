@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @Validated
 @RequestMapping("/notification")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class NotificationAPI {
 
         @Autowired

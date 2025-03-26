@@ -22,7 +22,7 @@ import com.jobportal.service.ProfileService;
 
 @RestController
 @Validated
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/profiles")
 public class ProfileAPI {
     @Autowired

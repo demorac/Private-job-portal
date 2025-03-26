@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @Validated
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class UserAPI {
 
     @Autowired
