@@ -1,14 +1,20 @@
-# Use an official Java runtime as a parent image
+# Use OpenJDK 17 as the base image
 FROM openjdk:17-jdk-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy the JAR file from the build
-COPY target/Job-Portal-0.0.3-SNAPSHOT.jar app.jar
+# Copy the source code
+COPY . .
 
-# Expose the application port
+# Build the application using Maven (inside Docker)
+RUN ./mvnw clean package -DskipTests
+
+# Copy the generated JAR file to the container
+COPY target/Job-Portal-0.0.4-SNAPSHOT.jar app.jar
+
+# Expose the port
 EXPOSE 8080
 
-# Command to run the application
+# Run the application
 CMD ["java", "-jar", "app.jar"]
