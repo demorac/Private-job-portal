@@ -127,9 +127,16 @@ public void removeExpiredOTPs() {
     }
 }
 
+
 @Override
 public void sendInterviewEmail(String email, String jobTitle, String company, String interviewTime, String interviewLocation) throws Exception {
     try {
+        System.out.println("📩 Preparing email for: " + email);
+        System.out.println("📌 Job Title: " + jobTitle);
+        System.out.println("🏢 Company: " + company);
+        System.out.println("🕒 Interview Time: " + interviewTime);
+        System.out.println("📍 Interview Location: " + interviewLocation);
+
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -162,7 +169,7 @@ public void sendInterviewEmail(String email, String jobTitle, String company, St
 
         helper.setText(emailContent, true);
 
-        System.out.println("📤 Sending email to: " + email);
+        System.out.println("📤 Sending email...");
         mailSender.send(message);
         System.out.println("✅ Email sent successfully!");
 
@@ -171,6 +178,7 @@ public void sendInterviewEmail(String email, String jobTitle, String company, St
         e.printStackTrace();
     }
 }
+
 
 
 @Override
